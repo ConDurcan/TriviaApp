@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TriviaGameProject.Options"
+             Title="Options">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Themes" FontSize="Large" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Button Text="Light" x:Name="LightThemeBtn" Grid.Row="1" Grid.Column="0" Clicked="LightThemeBtn_Clicked"/>
+            <Button Text="Dark" x:Name="DarkThemeBtn" Grid.Row="1" Grid.Column="1" Clicked="DarkThemeBtn_Clicked"/>
+            <Button Text="3" x:Name="ThemeBtn" Grid.Row="1" Grid.Column="2" Clicked="LightThemeBtn_Clicked"/>
+
+            <Label Text="Font Style" FontSize="Large" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Button Text="Style1" x:Name="Style1Btn" Grid.Row="3" Grid.Column="0" Clicked="LightThemeBtn_Clicked"/>
+            <Button Text="Style2" x:Name="Style2Btn" Grid.Row="3" Grid.Column="1" Clicked="DarkThemeBtn_Clicked"/>
+            <Button Text="Style3" x:Name="Style3Btn" Grid.Row="3" Grid.Column="2" Clicked="LightThemeBtn_Clicked"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
