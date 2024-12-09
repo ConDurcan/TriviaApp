@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TriviaGameProject.Options">
+    <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <BoxView BackgroundColor="{DynamicResource PrimaryBackgroundColour}" Grid.ColumnSpan="3"/>
+            <Label Text="Themes" FontSize="Large" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource TextColour}"/>
+            <Button Text="Light" x:Name="LightThemeBtn" Grid.Row="1" Grid.Column="0" Clicked="LightThemeBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}"/>
+            <Button Text="Dark" x:Name="DarkThemeBtn" Grid.Row="1" Grid.Column="1" Clicked="DarkThemeBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}"/>
+            <Button Text="3" x:Name="ThemeBtn" Grid.Row="1" Grid.Column="2" Clicked="LightThemeBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}"/>
+
+            <BoxView BackgroundColor="{DynamicResource PrimaryBackgroundColour}" Grid.ColumnSpan="3"/>
+            <Label Text="Font Style" FontSize="Large" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource TextColour}"/>
+            <Button Text="Standard" x:Name="StandardBtn" Grid.Row="3" Grid.Column="0" Clicked="StandardBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}"/>
+            <Button Text="Retro" x:Name="RetroBtn" Grid.Row="3" Grid.Column="1" Clicked="RetroBtn_Clicked"  BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}"/>
+            <Button Text="Fancy" x:Name="FancyBtn" Grid.Row="3" Grid.Column="2" Clicked="FancyBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

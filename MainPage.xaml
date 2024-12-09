@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TriviaGameProject.MainPage">
+    
+    <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
+        <Label Text="Top Quizzer" HorizontalOptions="Center" FontSize="Header" Padding="100" TextColor="{DynamicResource TextColour}"/>
+        <Button Text="New Game" x:Name="NewGameBtn" Clicked="NewGameBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}"/>
+        <Button Text="Continue" x:Name="ContinueGameBtn" Clicked="ContinueGameBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}"/>
+        <Button Text="Options" x:Name="OptionsBtn" Clicked="OptionsBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}"/>
+    </VerticalStackLayout>
+        
+</ContentPage>
