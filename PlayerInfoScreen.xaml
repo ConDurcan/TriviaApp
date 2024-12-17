@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TriviaGameProject.PlayerInfoScreen"
+             >
+    <ScrollView>
+    <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
+        <Label 
+            Text="How many players?"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="Header"
+            TextColor="{DynamicResource TextColour}"
+            FontFamily="{DynamicResource FontStyle}"
+            />
+        <Button Text="1"
+                HorizontalOptions="Center"
+                BackgroundColor="{DynamicResource ButtonColour}"
+                WidthRequest="200"
+                Margin="10"
+                x:Name="OnePlayerBtn"
+                Clicked="OnePlayerBtn_Clicked"
+                FontFamily="{DynamicResource FontStyle}"
+                FontSize="{DynamicResource FontSize}"/>
+        <Button Text="2"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Margin="10"
+                BackgroundColor="{DynamicResource ButtonColour}"
+                x:Name="TwoPlayerBtn"
+                Clicked="TwoPlayerBtn_Clicked"
+                FontFamily="{DynamicResource FontStyle}"
+                FontSize="{DynamicResource FontSize}"/>
+        <Button Text="3"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Margin="10"
+                BackgroundColor="{DynamicResource ButtonColour}"
+                x:Name="ThreePlayerBtn"
+                Clicked="ThreePlayerBtn_Clicked"
+                FontFamily="{DynamicResource FontStyle}"
+                FontSize="{DynamicResource FontSize}"/>
+        <Button Text="4"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Margin="10"
+                BackgroundColor="{DynamicResource ButtonColour}"
+                FontFamily="{DynamicResource FontStyle}"
+                 x:Name="FourPlayerBtn"
+                Clicked="FourPlayerBtn_Clicked"
+                FontSize="{DynamicResource FontSize}"/>
+
+        <Entry x:Name="PlayerNameEntry1" Placeholder="Enter Player 1's name!" Margin="10" IsVisible="{Binding IsVisible}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Entry x:Name="PlayerNameEntry2" Placeholder="Enter Player 2's name!" Margin="10" IsVisible="{Binding IsVisible}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Entry x:Name="PlayerNameEntry3" Placeholder="Enter Player 3's name!" Margin="10" IsVisible="{Binding IsVisible}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Entry x:Name="PlayerNameEntry4" Placeholder="Enter Player 4's name!" Margin="10" IsVisible="{Binding IsVisible}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Button x:Name="BeginBtn" Text="Begin" Clicked="BeginBtn_Clicked" IsVisible="{Binding IsVisible}" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
