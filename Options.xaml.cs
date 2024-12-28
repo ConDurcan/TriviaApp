@@ -13,7 +13,7 @@ public partial class Options : ContentPage
 		InitializeComponent();
         CheckOptions();
 	}
-
+    //All of the options button work off of preferences that are fed into the CheckOptions() method
     private void LightThemeBtn_Clicked(object sender, EventArgs e)
     {
         Preferences.Default.Set("Theme_Choice", "LIGHT");
@@ -62,7 +62,8 @@ public partial class Options : ContentPage
         Preferences.Default.Set("FontSize_Choice", "LARGE");
         CheckOptions();
     }
-
+    //tried to make 1 mega function to do everything for every page but found the Resource[] ones only effect the page their written on
+    //so I have made seperate functions in the other pages just for the sake of it working however it still works fine for this page
     public void CheckOptions()
     {
         ThemeName = Preferences.Default.Get("Theme_Choice", "LIGHT");

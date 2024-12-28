@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TriviaGameProject.ScoreScreen"
+             >
+    <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
+        <Label 
+            Text="High Scores"
+            FontSize="Header"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            TextColor="{DynamicResource TextColour}" 
+            FontFamily="{DynamicResource FontStyle}"/>
+
+        <Label x:Name="FirstScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="SecondScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="ThirdScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="FourthScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="FifthScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Button x:Name="HomeButton" VerticalOptions="Center" HorizontalOptions="Center" Clicked="HomeButton_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+    </VerticalStackLayout>
+</ContentPage>

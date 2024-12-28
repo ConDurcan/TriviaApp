@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TriviaGameProject.SPGameScreen"
+             xmlns:viewmodel="clr-namespace:TriviaGameProject"
+             x:DataType="viewmodel:ViewModel">
+    <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
+        <Grid x:Name="SinglePlayerGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="TheQuestion" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" FontSize="Header" Padding="100" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
+            <Button x:Name="ButtonA" Grid.Row="1" Grid.Column="0" Padding="20" Clicked="ButtonA_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button x:Name="ButtonB" Grid.Row="1" Grid.Column="1" Padding="20" Clicked="ButtonB_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button x:Name="ButtonC" Grid.Row="2" Grid.Column="0" Padding="20" Clicked="ButtonC_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button x:Name="ButtonD" Grid.Row="2" Grid.Column="1" Padding="20" Clicked="ButtonD_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        </Grid>
+        <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="ScoreDisplay" FontSize="Large" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

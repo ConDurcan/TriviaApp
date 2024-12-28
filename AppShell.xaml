@@ -8,7 +8,23 @@
     Title="TriviaGameProject">
 
     <ShellContent
+        
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <ShellContent Title =" ScoreScreen " ContentTemplate ="{ DataTemplate local:ScoreScreen }" 
+                  Route =" scorescreen " />
+
+    <ShellContent Title="PlayerInfoScreen" ContentTemplate="{DataTemplate local:PlayerInfoScreen}"
+                  Route="playerinfoscreen"/>
+
+    <ShellContent Title="Options" ContentTemplate="{DataTemplate local:Options}"
+                  Route="options"/>
+
+    <ShellContent Title="SPGameScreen" ContentTemplate="{DataTemplate local:SPGameScreen}"
+                  Route="spgamescreen"/>
+
+    <ShellContent Title="MPGameScreen" ContentTemplate="{DataTemplate local:MPGameScreen}"
+                  Route="mpgamescreen"/>
 
 </Shell>

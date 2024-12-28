@@ -5,7 +5,7 @@ namespace TriviaGameProject;
 public class ViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
-
+    //This is for the appearing and disappearing PlayerNameEntry input bars on the PlayerInfoScreen.
     private bool _isVisible = false;
     public bool IsVisible
     {
@@ -17,6 +17,20 @@ public class ViewModel : INotifyPropertyChanged
                 _isVisible = value;
                 OnPropertyChanged();
             }
+        }
+    }
+    // DataBinding for changing Question Text on the GameScreens.
+    private string currentQuestion;
+    public string CurrentQuestion
+    {
+        get
+        {
+            return currentQuestion;
+        }
+        set
+        {
+            currentQuestion = value;
+            OnPropertyChanged(nameof(CurrentQuestion));
         }
     }
     public ViewModel()
