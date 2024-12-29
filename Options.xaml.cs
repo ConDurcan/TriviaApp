@@ -7,6 +7,7 @@ public partial class Options : ContentPage
     public string ThemeName;
     public string FontStyle;
     string FontSizePref;
+    string QuestionsPerRoundPref;
 
 	public Options()
 	{
@@ -105,8 +106,35 @@ public partial class Options : ContentPage
         {
             Resources["FontSize"] = 30;
         }
-    }
-    
 
-   
+    }
+
+    private void ThreeRoundsBtn_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Default.Set("RoundsPerGame", "3");
+    }
+
+    private void FourRoundsBtn_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Default.Set("RoundsPerGame", "4");
+    }
+
+    private void FiveRoundsBtn_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Default.Set("RoundsPerGame", "5");
+    }
+    private void FiveperRoundBtn_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Default.Set("QuestionsPerRound", "5");
+    }
+
+    private void TenperRoundBtn_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Default.Set("QuestionsPerRound", "10");
+    }
+
+    private void FifteenperRoundBtn_Clicked(object sender, EventArgs e)
+    {
+        Preferences.Default.Set("QuestionsPerRound", "15");
+    }
 }

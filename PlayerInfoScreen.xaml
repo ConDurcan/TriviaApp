@@ -16,7 +16,7 @@
         <Button Text="1"
                 HorizontalOptions="Center"
                 BackgroundColor="{DynamicResource ButtonColour}"
-                WidthRequest="200"
+                WidthRequest="200" 
                 Margin="10"
                 x:Name="OnePlayerBtn"
                 Clicked="OnePlayerBtn_Clicked"

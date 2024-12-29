@@ -3,28 +3,32 @@ namespace TriviaGameProject;
 
 public partial class MPGameScreen : ContentPage
 {
-    string PlayerNameFile = @"C:\Users\conor\Documents\Json Files\PlayerNames.json";
-    string GameStateFile = @"C:\Users\conor\Documents\Json Files\GameState.json";
-    string MPScoresFile = @"C:\Users\conor\Documents\Json Files\MPScores.json";
+    string PlayerNameFile = Path.Combine(FileSystem.Current.AppDataDirectory, "PlayerNames.json");
+    string GameStateFile = Path.Combine(FileSystem.Current.AppDataDirectory, "GameState.json");
+    string MPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "MPScores.json");
     string jsonString;
     string FontStyle;
     string FontSizePref;
+    string QuestionsPerRoundPref;
+    int QuestionsPerRound;
+    int PlayerNum;
     int RandomNum;
     int QuestionNum = 0;
     int Player1Score = 0;
     int Player2Score = 0;
     int Player3Score = 0;
     int Player4Score = 0;
+    int HighestScorer;
     int Player1Rounds = 0;
     int Player2Rounds = 0;
     int Player3Rounds = 0;
     int Player4Rounds = 0;
     int PlayerTurn = 1;
+    int RoundNum;
     bool GameOver = false;
     QuestionResponse questionInput;
     Random random = new Random();
     List<Game> games = new List<Game>();
-    Game game = new Game();
     List<PlayerNames> playerNames = new List<PlayerNames>();
     List<Question> question = new List<Question>();
     HttpClient client = new HttpClient();
@@ -36,10 +40,39 @@ public partial class MPGameScreen : ContentPage
         CheckFontStyle();
         getGameState();
         getPlayerNames();
+        CheckRoundLength();
         SetupGame();
         client = new HttpClient();
         viewmodel = new ViewModel();
         BindingContext = viewmodel;
+    }
+    //If game is not over and you leave it saves so when you return you can continue
+    protected override void OnDisappearing()
+    {
+        if (GameOver = false)
+        {
+
+            games[0].PlayerNum = PlayerNum;
+            games[0].TurnNum = PlayerTurn;
+            games[0].RoundNum = RoundNum;
+            games[0].QuestionNum = QuestionNum;
+            games[0].Player1Score = Player1Score;
+            games[0].Player2Score = Player2Score;
+            games[0].Player3Score = Player3Score;
+            games[0].Player4Score = Player4Score;
+            games[0].Player1Rounds = Player1Rounds;
+            games[0].Player2Rounds = Player2Rounds;
+            games[0].Player3Rounds = Player3Rounds;
+            games[0].Player4Rounds = Player4Rounds;
+
+            jsonString = JsonSerializer.Serialize(games);
+
+            using (StreamWriter writer = new StreamWriter(GameStateFile))
+            {
+                writer.Write(jsonString);
+            }
+        }
+        base.OnDisappearing();
     }
 
     public void getPlayerNames()
@@ -132,6 +165,34 @@ public partial class MPGameScreen : ContentPage
         AnswerAssign();
     }
 
+    private void CheckRounds()
+    {
+        if (QuestionNum % QuestionsPerRound == 0)
+        {
+            DisplayAlert("Next Player", "Player " + PlayerTurn + "these ones are for you", "Alrighty Then");
+        }
+        if(PlayerTurn == 5)
+        {
+            DisplayAlert("Round Finish", "The Player with the most points is" + HighestScorer, "Next Round");
+            if(HighestScorer == 1)
+            {
+                Player1Rounds++;
+            }
+            else if(HighestScorer == 2)
+            {
+                Player2Rounds++;
+            }
+            else if(HighestScorer == 3)
+            {
+                Player3Rounds++;
+            }
+            else if(HighestScorer == 4)
+            {
+                Player4Rounds++;
+            }
+        }
+    }
+
 
 
 
@@ -172,6 +233,26 @@ public partial class MPGameScreen : ContentPage
         }
     }
 
+    private void CheckRoundLength()
+    {
+        QuestionsPerRoundPref = Preferences.Default.Get("QuestionsPerRound", "5");
+            if(QuestionsPerRoundPref == "5")
+        {
+            QuestionsPerRound = 5;
+        }
+            else if(QuestionsPerRoundPref == "10")
+        {
+            QuestionsPerRound = 10;
+        }
+            else if(QuestionsPerRoundPref == "15")
+        {
+            QuestionsPerRound = 15;
+        }
+    }
+    //Just handles the buttons. When a button is clicked it checks to see if its right and adds to your score 
+    //if so then changes the question and button text according to how many have been asked.
+    //Also checks to see if the quiz is over by checking the questionNum to the count of the List of Questions
+    
     private void ButtonA_Clicked(object sender, EventArgs e)
     {
         if (ButtonA.Text == questionInput.results[QuestionNum].correct_answer)
@@ -181,7 +262,7 @@ public partial class MPGameScreen : ContentPage
             CheckGameOver();
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
 
         }
         else
@@ -204,7 +285,7 @@ public partial class MPGameScreen : ContentPage
             CheckGameOver();
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
 
         }
         else
@@ -225,7 +306,7 @@ public partial class MPGameScreen : ContentPage
             CheckGameOver();
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString(); ;
         }
         else
         {
@@ -246,7 +327,7 @@ public partial class MPGameScreen : ContentPage
             CheckGameOver();
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
 
         }
         else
@@ -257,6 +338,7 @@ public partial class MPGameScreen : ContentPage
             AnswerAssign();
         }
     }
+
     //Gives values to the game class so they can be saved and sends you to the score screen
     private void CheckGameOver()
     {

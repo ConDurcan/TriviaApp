@@ -11,9 +11,8 @@ public partial class PlayerInfoScreen : ContentPage
     public string Player3Name;
     public string Player4Name;
     int nullcheck = 0;
-    //If the paths here are still hardcoded sorry but the appdata path wasnt working for me.
-    string PlayerNameFile = @"C:\Users\conor\Documents\Json Files\PlayerNames.json";
-    string GameStateFile = @"C:\Users\conor\Documents\Json Files\GameState.json";
+    string PlayerNameFile = Path.Combine(FileSystem.Current.AppDataDirectory, "PlayerNames.json");
+    string GameStateFile = Path.Combine(FileSystem.Current.AppDataDirectory, "GameState.json");
     string fileString;
     string FontStyle;
     string FontSizePref;

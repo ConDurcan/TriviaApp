@@ -1,15 +1,12 @@
 using System.Text.Json;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Microsoft.Maui.Dispatching;
 
 namespace TriviaGameProject;
 
 public partial class SPGameScreen : ContentPage
 {
-    string PlayerNameFile = @"C:\Users\conor\Documents\Json Files\PlayerNames.json";
-    string GameStateFile = @"C:\Users\conor\Documents\Json Files\GameState.json";
-    string SPScoresFile = @"C:\Users\conor\Documents\Json Files\SPScores.json";
+    string PlayerNameFile = Path.Combine(FileSystem.Current.AppDataDirectory, "PlayerNames.json");
+    string GameStateFile = Path.Combine(FileSystem.Current.AppDataDirectory, "GameState.json");
+    string SPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "SPScores.json");
     string jsonString;
     string FontStyle;
     string FontSizePref;
@@ -19,10 +16,11 @@ public partial class SPGameScreen : ContentPage
     bool GameOver = false;
     QuestionResponse questionInput;
     Random random = new Random();
-    List<Game> games = new List<Game>();
+    List<Game> games;
     Game game = new Game();
-    List<PlayerNames> playerNames = new List<PlayerNames>();
+    List<PlayerNames> playerNames;
     List<Question> question = new List<Question>();
+    List<Scores> scores;    
     HttpClient client = new HttpClient();
     private ViewModel viewmodel;
     
@@ -33,6 +31,9 @@ public partial class SPGameScreen : ContentPage
 		InitializeComponent();
         CheckFontSize();
         CheckFontStyle();
+        games = new List<Game>();
+        playerNames = new List<PlayerNames>();
+        scores = new List<Scores>();
         getGameState();
         getPlayerNames();
         SetupGame();
@@ -40,6 +41,7 @@ public partial class SPGameScreen : ContentPage
         viewmodel = new ViewModel();
         BindingContext = viewmodel;
     }
+    
 
     public void getPlayerNames()
     {
@@ -170,7 +172,9 @@ public partial class SPGameScreen : ContentPage
             Resources["FontStyle"] = "FancyFont";
         }
     }
-
+    //Just handles the buttons. When a button is clicked it checks to see if its right and adds to your score 
+    //if so then changes the question and button text according to how many have been asked.
+    //Also checks to see if the quiz is over by checking the questionNum to the count of the List of Questions
     private void ButtonA_Clicked(object sender, EventArgs e)
     {
         if(ButtonA.Text == questionInput.results[QuestionNum].correct_answer)
@@ -181,7 +185,7 @@ public partial class SPGameScreen : ContentPage
             questionInput.results[QuestionNum].question = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].question);
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
             
         }
         else
@@ -206,7 +210,7 @@ public partial class SPGameScreen : ContentPage
             questionInput.results[QuestionNum].question = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].question);
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
 
         }
         else
@@ -229,7 +233,7 @@ public partial class SPGameScreen : ContentPage
             questionInput.results[QuestionNum].question = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].question);
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
         }
         else
         {
@@ -252,7 +256,7 @@ public partial class SPGameScreen : ContentPage
             questionInput.results[QuestionNum].question = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].question);
             TheQuestion.Text = questionInput.results[QuestionNum].question;
             AnswerAssign();
-            ScoreDisplay.Text = "Your score: " + Player1Score.ToString();
+            ScoreDisplay.Text = playerNames[0].Player1Name + "'s score: " + Player1Score.ToString();
 
         }
         else
@@ -270,14 +274,11 @@ public partial class SPGameScreen : ContentPage
         if(QuestionNum == questionInput.results.Count - 1)
         {
             GameOver = true;
-            //Player1Score = games[0]b .Player1Score;
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-            jsonString = JsonSerializer.Serialize(games, options);
+            games[0].Player1Score = Player1Score; 
+  
+            jsonString = JsonSerializer.Serialize(games);
 
-            using (StreamWriter writer = new StreamWriter(SPScoresFile))
+            using (StreamWriter writer = new StreamWriter(GameStateFile))
             {
                 writer.Write(jsonString);
             }

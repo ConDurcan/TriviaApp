@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TriviaGameProject
 {
-    class PlayerNames
+    public class PlayerNames
     {
         public string Player1Name {  get; set; }
         public string Player2Name { get; set; }

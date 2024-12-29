@@ -12,11 +12,11 @@
             TextColor="{DynamicResource TextColour}" 
             FontFamily="{DynamicResource FontStyle}"/>
 
-        <Label x:Name="FirstScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Label x:Name="SecondScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Label x:Name="ThirdScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Label x:Name="FourthScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Label x:Name="FifthScore" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Button x:Name="HomeButton" VerticalOptions="Center" HorizontalOptions="Center" Clicked="HomeButton_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="FirstScoreLbl" VerticalOptions="Center" HorizontalOptions="Center" Margin="10" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="SecondScoreLbl" VerticalOptions="Center" HorizontalOptions="Center" Margin="10" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="ThirdScoreLbl" VerticalOptions="Center" HorizontalOptions="Center"  Margin="10" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="FourthScoreLbl" VerticalOptions="Center" HorizontalOptions="Center" Margin="10" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Label x:Name="FifthScoreLbl" VerticalOptions="Center" HorizontalOptions="Center" Margin="10" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Button x:Name="HomeButton" Text="Home" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="200" Margin="10" Clicked="HomeButton_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
     </VerticalStackLayout>
 </ContentPage>

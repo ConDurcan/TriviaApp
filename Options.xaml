@@ -11,6 +11,10 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -34,6 +38,18 @@
             <Button Text="Small" x:Name="SmallFontBtn"  Grid.Row="5" Grid.Column="0" Clicked="SmallFontBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
             <Button Text="Medium" x:Name="MediumFontBtn"  Grid.Row="5" Grid.Column="1" Clicked="MediumFontBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
             <Button Text="Large" x:Name="LargeFontBtn" Grid.Row="5" Grid.Column="2" Clicked="LargeFontBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+
+            <BoxView BackgroundColor="{DynamicResource PrimaryBackgroundColour}" Grid.ColumnSpan="3"/>
+            <Label Text="Questions Per Round" FontSize="Large" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
+            <Button Text="5" x:Name="FiveperRoundBtn" Grid.Row="7" Grid.Column="0" Clicked="FiveperRoundBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button Text="10" x:Name="TenperRoundBtn" Grid.Row="7" Grid.Column="1" Clicked="TenperRoundBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button Text="15" x:Name="FifteenperRoundBtn" Grid.Row="7" Grid.Column="2" Clicked="FifteenperRoundBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+
+            <BoxView BackgroundColor="{DynamicResource PrimaryBackgroundColour}" Grid.ColumnSpan="3"/>
+            <Label Text="Amount of Rounds" FontSize="Large" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
+            <Button Text="3" x:Name="ThreeRoundsBtn" Clicked="ThreeRoundsBtn_Clicked" Grid.Row="9" Grid.Column="0" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button Text="4" x:Name="FourRoundsBtn" Clicked="FourRoundsBtn_Clicked" Grid.Row="9" Grid.Column="1" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+            <Button Text="5" x:Name="FiveRoundsBtn" Clicked="FiveRoundsBtn_Clicked" Grid.Row="9" Grid.Column="2" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

@@ -5,9 +5,9 @@
     
     <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
         <Label Text="Top Quizzer" HorizontalOptions="Center" FontSize="Header" Padding="100" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
-        <Button Text="New Game" x:Name="NewGameBtn" Clicked="NewGameBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Button Text="Continue" x:Name="ContinueGameBtn" Clicked="ContinueGameBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        <Button Text="Options" x:Name="OptionsBtn" Clicked="OptionsBtn_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Button Text="New Game" x:Name="NewGameBtn" Clicked="NewGameBtn_Clicked" WidthRequest="200" Margin="10" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Button Text="Continue" x:Name="ContinueGameBtn" Clicked="ContinueGameBtn_Clicked" WidthRequest="200" Margin="10" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        <Button Text="Options" x:Name="OptionsBtn" Clicked="OptionsBtn_Clicked" WidthRequest="200" Margin="10" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
     </VerticalStackLayout>
         
 </ContentPage>
