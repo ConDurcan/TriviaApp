@@ -11,8 +11,8 @@ public partial class SPGameScreen : ContentPage
     string FontStyle;
     string FontSizePref;
     int RandomNum;
-    int QuestionNum = 0;
-    int Player1Score = 0;
+    int QuestionNum;
+    int Player1Score;
     bool GameOver = false;
     QuestionResponse questionInput;
     Random random = new Random();
@@ -84,9 +84,28 @@ public partial class SPGameScreen : ContentPage
         {
             string contents = await response.Content.ReadAsStringAsync();           
             questionInput = JsonSerializer.Deserialize<QuestionResponse>(contents);
+            questionInput.results[QuestionNum].question = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].question);
             TheQuestion.Text = questionInput.results[0].question;
         }
 
+    }
+    // Saves the game state when the page disappears
+    protected override void OnDisappearing()
+    {
+        if (GameOver = false)
+        {
+            games[0].QuestionNum = QuestionNum;
+            games[0].Player1Score = Player1Score;
+
+
+            jsonString = JsonSerializer.Serialize(games);
+
+            using (StreamWriter writer = new StreamWriter(GameStateFile))
+            {
+                writer.Write(jsonString);
+            }
+        }
+        base.OnDisappearing();
     }
     //Function to randomize the correct answer
     private async Task AnswerAssign()
@@ -94,6 +113,11 @@ public partial class SPGameScreen : ContentPage
         RandomNum = random.Next(1,4 + 1);
         if(RandomNum == 1)
         {
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].correct_answer);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[0]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[1]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[2]);
+
             ButtonA.Text = questionInput.results[QuestionNum].correct_answer;
             ButtonB.Text = questionInput.results[QuestionNum].incorrect_answers[0];
             ButtonC.Text = questionInput.results[QuestionNum].incorrect_answers[1];
@@ -101,6 +125,10 @@ public partial class SPGameScreen : ContentPage
         }
         else if(RandomNum == 2)
         {
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].correct_answer);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[0]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[1]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[2]);
             ButtonA.Text = questionInput.results[QuestionNum].incorrect_answers[0];
             ButtonB.Text = questionInput.results[QuestionNum].correct_answer;
             ButtonC.Text = questionInput.results[QuestionNum].incorrect_answers[1];
@@ -108,6 +136,10 @@ public partial class SPGameScreen : ContentPage
         }
         else if(RandomNum == 3)
         {
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].correct_answer);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[0]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[1]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[2]);
             ButtonA.Text = questionInput.results[QuestionNum].incorrect_answers[0];
             ButtonB.Text = questionInput.results[QuestionNum].incorrect_answers[1];
             ButtonC.Text = questionInput.results[QuestionNum].correct_answer;
@@ -115,6 +147,10 @@ public partial class SPGameScreen : ContentPage
         }
         else if(RandomNum == 4)
         {
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].correct_answer);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[0]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[1]);
+            questionInput.results[QuestionNum].correct_answer = System.Web.HttpUtility.HtmlDecode(questionInput.results[QuestionNum].incorrect_answers[2]);
             ButtonA.Text = questionInput.results[QuestionNum].incorrect_answers[0];
             ButtonB.Text = questionInput.results[QuestionNum].incorrect_answers[1];
             ButtonC.Text = questionInput.results[QuestionNum].incorrect_answers[2];
@@ -128,6 +164,8 @@ public partial class SPGameScreen : ContentPage
 
     private async void SetupGame()
     {
+        Player1Score = games[0].Player1Score;
+        QuestionNum = games[0].QuestionNum;
         GetQuestions();
         await Task.Delay(1000);
         AnswerAssign();

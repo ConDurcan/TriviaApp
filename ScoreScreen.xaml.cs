@@ -5,14 +5,15 @@ namespace TriviaGameProject;
 public partial class ScoreScreen : ContentPage
 {
     string SPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "SPScores.json");
+    string MPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "MPScores.json");
     string GameStateFile = Path.Combine(FileSystem.Current.AppDataDirectory, "GameState.json");
     string PlayerNameFile = Path.Combine(FileSystem.Current.AppDataDirectory, "PlayerNames.json");
     string jsonString;
-    string HSText = "30";
-    string SecText = "25";
-    string ThirText = "20";
-    string FourText = "15";
-    string FiveText = "10";
+    string HSText = "1. 30";
+    string SecText = "2. 25";
+    string ThirText = "3. 20";
+    string FourText = "4. 15";
+    string FiveText = "5. 10";
     List<Game> games = new List<Game>();
     int basescore = 0;
     List<Scores> scores = new List<Scores>();
@@ -86,7 +87,7 @@ public partial class ScoreScreen : ContentPage
         }
         catch (Exception ex)
         {
-            DisplayAlert("Player name deserializing issue", "There has been an issue accessing the PlayerNames file", "ok");
+            DisplayAlert("Single Player Scores deserializing issue", "There has been an issue accessing SPScoresFile", "ok");
         }//Checks the amounts in the file and if the criteria is met replaces and saves them
             if (games[0].Player1Score > scores[0].HighScore)
             {
@@ -197,6 +198,443 @@ public partial class ScoreScreen : ContentPage
     }
     private void GetMpScores()
     {
+        if(File.Exists(MPScoresFile))
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader(MPScoresFile))
+                {
+                    jsonString = reader.ReadToEnd();
+                    scores = JsonSerializer.Deserialize<List<Scores>>(jsonString);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Single Player Scores deserializing issue", "There has been an issue accessing SPScoresFile", "ok");
+            }//As you've probably noticed by now I like a big if statement
+            //This checks for the highest score to display a winner 
+            //Tiebreakers are based on total score
+            //If total score is same i suppose youre going to have to play again to see who wins
+            //My brain is melting trying to keep track of this so I hope it works
+            if (games[0].PlayerNum == 2)
+            {
+                if (games[0].Player1Rounds > games[0].Player2Rounds || games[0].Player1Rounds == games[0].Player2Rounds && games[0].Player1TotalScore > games[0].Player2TotalScore)
+                {
+                    HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                    SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                    FirstScoreLbl.Text = HSText;
+                    SecondScoreLbl.Text = SecText;
+                }
+                else if (games[0].Player2Rounds > games[0].Player1Rounds || games[0].Player2Rounds == games[0].Player1Rounds && games[0].Player2TotalScore > games[0].Player1TotalScore)
+                {
+                    HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                    SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                    FirstScoreLbl.Text = HSText;
+                    SecondScoreLbl.Text = SecText;
+                }
+                else
+                {
+                    HSText = "This is as much of a tie as I've seen I guess you'll have to play again";
+                    FirstScoreLbl.Text = HSText;
+                }
+            }
+            else if (games[0].PlayerNum == 3)
+            {
+                if (games[0].Player1Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player3Rounds && games[0].Player2Rounds > games[0].Player3Rounds)
+                {
+                    HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                    SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                    ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                    FirstScoreLbl.Text = HSText;
+                    SecondScoreLbl.Text = SecText;
+                    ThirdScoreLbl.Text = ThirText;
+                }
+                else if (games[0].Player2Rounds > games[0].Player1Rounds && games[0].Player2Rounds > games[0].Player3Rounds && games[0].Player1Rounds > games[0].Player3Rounds)
+                {
+                    HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                    SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                    ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                    FirstScoreLbl.Text = HSText;
+                    SecondScoreLbl.Text = SecText;
+                    ThirdScoreLbl.Text = ThirText;
+                }
+                else if (games[0].Player3Rounds > games[0].Player1Rounds && games[0].Player3Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player2Rounds)
+                {
+                    HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                    SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                    ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                    FirstScoreLbl.Text = HSText;
+                    SecondScoreLbl.Text = SecText;
+                    ThirdScoreLbl.Text = ThirText;
+                }
+                else if (games[0].Player1Rounds == games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player3Rounds)
+                {
+                    if (games[0].Player1TotalScore > games[0].Player2TotalScore)
+                    {
+                        HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                    else
+                    {
+                        HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                }
+                else if (games[0].Player1Rounds == games[0].Player3Rounds && games[0].Player1Rounds > games[0].Player2Rounds)
+                {
+                    if (games[0].Player1TotalScore > games[0].Player3TotalScore)
+                    {
+                        HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                    else
+                    {
+                        HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                }
+                else if (games[0].Player1Rounds == games[0].Player2Rounds && games[0].Player1Rounds == games[0].Player3Rounds)
+                {
+                    if (games[0].Player1TotalScore > games[0].Player2TotalScore && games[0].Player1TotalScore > games[0].Player3TotalScore && games[0].Player2TotalScore > games[0].Player3TotalScore)
+                    {
+                        HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                    else if (games[0].Player2TotalScore > games[0].Player1TotalScore && games[0].Player2TotalScore > games[0].Player3TotalScore && games[0].Player1TotalScore > games[0].Player3TotalScore)
+                    {
+                        HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                    else if (games[0].Player3TotalScore > games[0].Player1TotalScore && games[0].Player3TotalScore > games[0].Player2TotalScore && games[0].Player1TotalScore > games[0].Player2TotalScore)
+                    {
+                        HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                        SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                        ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                        ThirdScoreLbl.Text = ThirText;
+                    }
+                    else
+                    {
+                        HSText = "The Three of you are as Good as each other it seems, or as bad I cant see the scores from here Play Again";
+                        SecText = "It could also be something I havent planned for but hey thems the breaks";
+                        FirstScoreLbl.Text = HSText;
+                        SecondScoreLbl.Text = SecText;
+                    }
+                }//I'm throwing a hail mary here nesting a bunch of if statements to try and get the scores to display correctly
+                 //I Imagine this is giving you a headache to read as much as it is for me to write, what even is a proper coding practice anyway huh?
+                else if (games[0].PlayerNum == 4)
+                {
+                    if (games[0].Player1Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player3Rounds && games[0].Player1Rounds > games[0].Player4Rounds && games[0].Player2Rounds > games[0].Player3Rounds && games[0].Player2Rounds > games[0].Player4Rounds && games[0].Player3Rounds > games[0].Player4Rounds || games[0].Player1Rounds == games[0].Player2Rounds && games[0].Player1Rounds == games[0].Player3Rounds && games[0].Player1Rounds == games[0].Player4Rounds && games[0].Player2Rounds == games[0].Player3Rounds && games[0].Player2Rounds == games[0].Player4Rounds && games[0].Player3Rounds == games[0].Player4Rounds)
+                    {
+                        if (games[0].Player2Rounds > games[0].Player3Rounds && games[0].Player2Rounds > games[0].Player4Rounds || games[0].Player2Rounds == games[0].Player3Rounds && games[0].Player2Rounds == games[0].Player4Rounds)
+                        {
+                            if (games[0].Player3Rounds > games[0].Player4Rounds || games[0].Player3Rounds == games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FourText = "4. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player3Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                ThirText = "3. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FourText = "4. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player3Rounds > games[0].Player2Rounds && games[0].Player3Rounds > games[0].Player4Rounds)
+                        {
+                            if (games[0].Player2Rounds > games[0].Player4Rounds || games[0].Player2Rounds == games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FourText = "4. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player2Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                ThirText = "3. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FourText = "4. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player4Rounds > games[0].Player2Rounds && games[0].Player4Rounds > games[0].Player3Rounds)
+                        {
+                            if (games[0].Player2Rounds > games[0].Player3Rounds || games[0].Player2Rounds == games[0].Player3Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                SecText = "2. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FourText = "4. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player3Rounds > games[0].Player2Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                SecText = "2. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FourText = "4. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                    }
+                    else if (games[0].Player2Rounds > games[0].Player1Rounds && games[0].Player2Rounds > games[0].Player3Rounds && games[0].Player2Rounds > games[0].Player4Rounds)
+                    {
+                        if (games[0].Player1Rounds > games[0].Player3Rounds && games[0].Player1Rounds > games[0].Player4Rounds || games[0].Player1Rounds == games[0].Player3Rounds && games[0].Player1Rounds == games[0].Player4Rounds)
+                        {
+                            if (games[0].Player3Rounds > games[0].Player4Rounds || games[0].Player3Rounds == games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FourText = "4. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player3Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                ThirText = "3. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FourText = "4. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player3Rounds > games[0].Player4Rounds && games[0].Player3Rounds > games[0].Player1Rounds)
+                        {
+                            if (games[0].Player1Rounds > games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                ThirText = "3. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FourText = "4. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player1Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                ThirText = "3. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FourText = "4. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player4Rounds > games[0].Player1Rounds && games[0].Player4Rounds > games[0].Player3Rounds)
+                        {
+                            if (games[0].Player1Rounds > games[0].Player4Rounds || games[0].Player1Rounds == games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                SecText = "2. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                ThirText = "3. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FourText = "4. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player1Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                SecText = "2. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FourText = "4. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                            }
+                        }
+                    }
+                    else if (games[0].Player3Rounds > games[0].Player1Rounds && games[0].Player3Rounds > games[0].Player2Rounds && games[0].Player3Rounds > games[0].Player4Rounds)
+                    {
+                        if (games[0].Player1Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player4Rounds || games[0].Player1Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player4Rounds)
+                        {
+                            if (games[0].Player2Rounds > games[0].Player4Rounds || games[0].Player2Rounds == games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FourText = "4. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player2Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                ThirText = "3. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FourText = "4. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player2Rounds > games[0].Player1Rounds && games[0].Player2Rounds > games[0].Player4Rounds)
+                        {
+                            if (games[0].Player1Rounds > games[0].Player4Rounds || games[0].Player1Rounds == games[0].Player4Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                ThirText = "3. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FourText = "4. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player4Rounds > games[0].Player1Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                ThirText = "3. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                FourText = "4. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                    }
+                    else if (games[0].Player4Rounds > games[0].Player1Rounds && games[0].Player4Rounds > games[0].Player2Rounds && games[0].Player4Rounds > games[0].Player3Rounds)
+                    {
+                        if (games[0].Player1Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player3Rounds || games[0].Player1Rounds == games[0].Player2Rounds && games[0].Player1Rounds == games[0].Player3Rounds)
+                        {
+                            if (games[0].Player2Rounds > games[0].Player3Rounds || games[0].Player2Rounds == games[0].Player3Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FourText = "4. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player3Rounds > games[0].Player2Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                SecText = "2. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FourText = "4. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player2Rounds > games[0].Player1Rounds && games[0].Player2Rounds > games[0].Player3Rounds)
+                        {
+                            if (games[0].Player1Rounds > games[0].Player3Rounds || games[0].Player1Rounds == games[0].Player3Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                ThirText = "3. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FourText = "4. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player3Rounds > games[0].Player1Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                SecText = "2. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                ThirText = "3. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                FourText = "4. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                        else if (games[0].Player3Rounds > games[0].Player1Rounds && games[0].Player3Rounds > games[0].Player2Rounds)
+                        {
+                            if (games[0].Player1Rounds > games[0].Player2Rounds || games[0].Player1Rounds == games[0].Player2Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                ThirText = "3. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FourText = "4. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                            else if (games[0].Player2Rounds > games[0].Player1Rounds)
+                            {
+                                HSText = "1. " + playerNames[0].Player4Name + " " + games[0].Player4TotalScore;
+                                SecText = "2. " + playerNames[0].Player3Name + " " + games[0].Player3TotalScore;
+                                ThirText = "3. " + playerNames[0].Player2Name + " " + games[0].Player2TotalScore;
+                                FourText = "4. " + playerNames[0].Player1Name + " " + games[0].Player1TotalScore;
+                                FirstScoreLbl.Text = HSText;
+                                SecondScoreLbl.Text = SecText;
+                                ThirdScoreLbl.Text = ThirText;
+                                FourthScoreLbl.Text = FourText;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

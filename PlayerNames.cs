@@ -12,7 +12,7 @@ namespace TriviaGameProject
         public string Player2Name { get; set; }
         public string Player3Name { get; set; }
         public string Player4Name { get; set; }
-
+        //Honestly dont know if after all the trouble I went through to get this to work if I even need these constructor anymore or any from any of the other ones
         public PlayerNames()
         {
             Player1Name = "Player1";
