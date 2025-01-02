@@ -280,6 +280,7 @@ public partial class MPGameScreen : ContentPage
             {
                 if (PlayerTurn == 1)
                 {
+                    PlayerTurn = 2;
                     Player1TotalScore = Player1Score + Player1TotalScore;
                     DisplayAlert("Next Player", "Player " + PlayerTurn + " these ones are for you", "Alrighty Then");
                     ScoreDisplayText = " ";
@@ -287,14 +288,18 @@ public partial class MPGameScreen : ContentPage
                 }
                 else if (PlayerTurn == 2)
                 {
+                    PlayerTurn = 3;
                     Player2TotalScore = Player2Score + Player2TotalScore;
+                    DisplayAlert("Next Player", "Player " + PlayerTurn + " these ones are for you", "Alrighty Then");
                     ScoreDisplayText = " ";
                     ScoreDisplay.Text = ScoreDisplayText;
                 }
                 else if (PlayerTurn == 3)
                 {
+                    PlayerTurn = 4;
                     Player3TotalScore = Player3Score + Player3TotalScore;
                     Player3Score = 0;
+                    DisplayAlert("Next Player", "Player " + PlayerTurn + " these ones are for you", "Alrighty Then");
                     ScoreDisplayText = " ";
                     ScoreDisplay.Text = ScoreDisplayText;
                 }

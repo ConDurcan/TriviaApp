@@ -2,9 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TriviaGameProject.Options">
+    <ScrollView>
     <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -50,6 +53,14 @@
             <Button Text="3" x:Name="ThreeRoundsBtn" Clicked="ThreeRoundsBtn_Clicked" Grid.Row="9" Grid.Column="0" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
             <Button Text="4" x:Name="FourRoundsBtn" Clicked="FourRoundsBtn_Clicked" Grid.Row="9" Grid.Column="1" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
             <Button Text="5" x:Name="FiveRoundsBtn" Clicked="FiveRoundsBtn_Clicked" Grid.Row="9" Grid.Column="2" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
-        </Grid>
-    </VerticalStackLayout>
+
+            <BoxView BackgroundColor="{DynamicResource PrimaryBackgroundColour}" Grid.ColumnSpan="3"/>
+            <Label Text="Clear Single Player Scores" FontSize="Large" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
+            <Button Text="Clear?" x:Name="ClearSPScoreFile" Clicked="ClearSPScoreFile_Clicked" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+               
+
+            </Grid>
+            <Button x:Name="HomeButton" Text="Home" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="200" Margin="20" Clicked="HomeButton_Clicked" BackgroundColor="{DynamicResource ButtonColour}" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

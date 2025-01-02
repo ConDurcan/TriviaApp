@@ -17,6 +17,7 @@ namespace TriviaGameProject
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            new Options().CheckOptions();
             CheckFontStyle();
             CheckFontSize();
 

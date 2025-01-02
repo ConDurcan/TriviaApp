@@ -3,7 +3,8 @@ using System.Text.Json;
 namespace TriviaGameProject;
 
 public partial class ScoreScreen : ContentPage
-{
+{//The idea for this page was to among showing the winner and runners up the time the game took to complete so you could race yourself in single player
+    //But getting the base functionality working took alot longer than I though and so the timer kind of fell by the wayside
     string SPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "SPScores.json");
     string MPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "MPScores.json");
     string GameStateFile = Path.Combine(FileSystem.Current.AppDataDirectory, "GameState.json");
@@ -15,7 +16,6 @@ public partial class ScoreScreen : ContentPage
     string FourText = "4. 15";
     string FiveText = "5. 10";
     List<Game> games = new List<Game>();
-    int basescore = 0;
     List<Scores> scores = new List<Scores>();
     List<PlayerNames> playerNames = new List<PlayerNames>();
     public ScoreScreen()
@@ -88,32 +88,32 @@ public partial class ScoreScreen : ContentPage
         catch (Exception ex)
         {
             DisplayAlert("Single Player Scores deserializing issue", "There has been an issue accessing SPScoresFile", "ok");
-        }//Checks the amounts in the file and if the criteria is met replaces and saves them
+        }//Checks the scores in the file and if the criteria is met replaces and saves them
             if (games[0].Player1Score > scores[0].HighScore)
             {
                 scores[0].HighScore = games[0].Player1Score;
                 scores[0].HighScoreName = playerNames[0].Player1Name;
                 HSText = "1. " + playerNames[0].Player1Name + " " + scores[0].HighScore;
             }
-            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score > scores[0].SecondScore)
+            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score > scores[0].SecondScore || games[0].Player1Score == scores[0].HighScore)
             {
                 scores[0].SecondScore = games[0].Player1Score;
                 scores[0].SecondScoreName = playerNames[0].Player1Name;
                 SecText = "2. " + playerNames[0].Player1Name + " " + scores[0].SecondScore;
             }
-            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score < scores[0].SecondScore && games[0].Player1Score > scores[0].ThirdScore)
+            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score < scores[0].SecondScore && games[0].Player1Score > scores[0].ThirdScore || games[0].Player1Score == scores[0].SecondScore)
             {
                 scores[0].ThirdScore = games[0].Player1Score;
                 scores[0].ThirdScoreName = playerNames[0].Player1Name;
                 ThirText = "3. " + playerNames[0].Player1Name + " " + scores[0].ThirdScore;
             }
-            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score < scores[0].SecondScore && games[0].Player1Score < scores[0].ThirdScore && games[0].Player1Score > scores[0].FourthScore)
+            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score < scores[0].SecondScore && games[0].Player1Score < scores[0].ThirdScore && games[0].Player1Score > scores[0].FourthScore || games[0].Player1Score == scores[0].ThirdScore)
             {
                 scores[0].FourthScore = games[0].Player1Score;
                 scores[0].FourthScoreName = playerNames[0].Player1Name;
                 FourText = "4. " + playerNames[0].Player1Name + " " + scores[0].FourthScore;
             }
-            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score < scores[0].SecondScore && games[0].Player1Score < scores[0].ThirdScore && games[0].Player1Score < scores[0].FourthScore && games[0].Player1Score > scores[0].FifthScore)
+            else if(games[0].Player1Score < scores[0].HighScore && games[0].Player1Score < scores[0].SecondScore && games[0].Player1Score < scores[0].ThirdScore && games[0].Player1Score < scores[0].FourthScore && games[0].Player1Score > scores[0].FifthScore || games[0].Player1Score == scores[0].FourthScore)
             {
                 scores[0].FifthScore = games[0].Player1Score;
                 scores[0].FifthScoreName = playerNames[0].Player1Name;
@@ -123,7 +123,7 @@ public partial class ScoreScreen : ContentPage
             {
                 DisplayAlert("Unlucky", "Better Luck Next Time!", "ok");
             }
-            //Making sure things show up like their supposed to by checking for nulls
+            //Making sure things show up like their supposed to by checking for nulls so we dont get empty strings
             if (scores[0].HighScore == null)
             {
                 HSText = "1. 30";
@@ -201,7 +201,7 @@ public partial class ScoreScreen : ContentPage
         if(File.Exists(MPScoresFile))
         {
             try
-            {
+            {   //For whatever reason this overwites the file with the base constructor
                 using (StreamReader reader = new StreamReader(MPScoresFile))
                 {
                     jsonString = reader.ReadToEnd();
@@ -348,6 +348,7 @@ public partial class ScoreScreen : ContentPage
                     }
                 }//I'm throwing a hail mary here nesting a bunch of if statements to try and get the scores to display correctly
                  //I Imagine this is giving you a headache to read as much as it is for me to write, what even is a proper coding practice anyway huh?
+                 //This nests the if statements to check for the highest score and then the second highest and then the third highest
                 else if (games[0].PlayerNum == 4)
                 {
                     if (games[0].Player1Rounds > games[0].Player2Rounds && games[0].Player1Rounds > games[0].Player3Rounds && games[0].Player1Rounds > games[0].Player4Rounds && games[0].Player2Rounds > games[0].Player3Rounds && games[0].Player2Rounds > games[0].Player4Rounds && games[0].Player3Rounds > games[0].Player4Rounds || games[0].Player1Rounds == games[0].Player2Rounds && games[0].Player1Rounds == games[0].Player3Rounds && games[0].Player1Rounds == games[0].Player4Rounds && games[0].Player2Rounds == games[0].Player3Rounds && games[0].Player2Rounds == games[0].Player4Rounds && games[0].Player3Rounds == games[0].Player4Rounds)
@@ -632,6 +633,11 @@ public partial class ScoreScreen : ContentPage
                                 FourthScoreLbl.Text = FourText;
                             }
                         }
+                    }
+                    else
+                    {
+                        FirstScoreLbl.Text = "I'm sorry I can't seem to figure out who won, I guess you'll have to play again";
+                        SecondScoreLbl.Text = "I'm not sure what happened but I'm sure you all did your best";
                     }
                 }
             }

@@ -1,4 +1,6 @@
+using System.Text.Json;
 using TriviaGameProject.Resources.Themes;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace TriviaGameProject;
 
@@ -8,8 +10,11 @@ public partial class Options : ContentPage
     public string FontStyle;
     string FontSizePref;
     string QuestionsPerRoundPref;
+    string SPScoresFile = Path.Combine(FileSystem.Current.AppDataDirectory, "SPScores.json");
+    string jsonString;
+    List<Scores> scores = new List<Scores>();
 
-	public Options()
+    public Options()
 	{
 		InitializeComponent();
         CheckOptions();
@@ -136,5 +141,42 @@ public partial class Options : ContentPage
     private void FifteenperRoundBtn_Clicked(object sender, EventArgs e)
     {
         Preferences.Default.Set("QuestionsPerRound", "15");
+    }
+    //I wanted to add this for replayability
+    private void ClearSPScoreFile_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            using (StreamReader reader = new StreamReader(SPScoresFile))
+            {
+                jsonString = reader.ReadToEnd();
+                scores = JsonSerializer.Deserialize<List<Scores>>(jsonString);
+
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Single Player Scores deserializing issue", "There has been an issue accessing SPScoresFile", "ok");
+        }
+        scores[0].HighScore = 30;
+        scores[0].SecondScore = 25;
+        scores[0].ThirdScore = 20;
+        scores[0].FourthScore = 15;
+        scores[0].FifthScore = 10;
+        scores[0].HighScoreName = " ";
+        scores[0].SecondScoreName = " ";
+        scores[0].ThirdScoreName = " ";
+        scores[0].FourthScoreName = " ";
+        scores[0].FifthScoreName = " ";
+        jsonString = JsonSerializer.Serialize(scores);
+        using (StreamWriter writer = new StreamWriter(SPScoresFile))
+        {
+            writer.Write(jsonString);
+        }
+    }
+
+    private void HomeButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new MainPage());
     }
 }

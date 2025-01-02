@@ -22,6 +22,7 @@
             <Button x:Name="ButtonD" Grid.Row="2" Grid.Column="1" Padding="20" Clicked="ButtonD_Clicked" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>
         </Grid>
         <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="ScoreDisplay" FontSize="Large" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
+        <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="TimerDisplay" FontSize="Large" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
 
     </VerticalStackLayout>
 </ContentPage>

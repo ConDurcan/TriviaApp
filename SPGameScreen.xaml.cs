@@ -1,4 +1,6 @@
+using MDriven.WebApi.Client;
 using System.Text.Json;
+using System.Timers;
 
 namespace TriviaGameProject;
 
@@ -11,6 +13,7 @@ public partial class SPGameScreen : ContentPage
     string FontStyle;
     string FontSizePref;
     int RandomNum;
+    string TimerDisplayText;
     int QuestionNum;
     int Player1Score;
     bool GameOver = false;
@@ -20,11 +23,10 @@ public partial class SPGameScreen : ContentPage
     Game game = new Game();
     List<PlayerNames> playerNames;
     List<Question> question = new List<Question>();
-    List<Scores> scores;    
+    List<Scores> scores;
     HttpClient client = new HttpClient();
     private ViewModel viewmodel;
-    
-
+    //Ambiguous reference to Timer, so I ended up having to remove it to get the rest of the app working.
 
     public SPGameScreen()
 	{
@@ -41,9 +43,12 @@ public partial class SPGameScreen : ContentPage
         viewmodel = new ViewModel();
         BindingContext = viewmodel;
     }
-    
 
-    public void getPlayerNames()
+   
+
+
+
+        public void getPlayerNames()
     {
         try
         {
@@ -169,6 +174,8 @@ public partial class SPGameScreen : ContentPage
         GetQuestions();
         await Task.Delay(1000);
         AnswerAssign();
+        //timer.Start();
+        //TimerDisplay.Text = timer.ToString();
     }
 
 

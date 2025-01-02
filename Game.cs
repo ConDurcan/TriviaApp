@@ -44,7 +44,7 @@ namespace TriviaGameProject
             Player4Score = 0;
             TurnNum = 1;
         }
-
+        //This is the troublesome constructor and my code breaks totally without it so I guess its gonna stay put here
         public Game()
         {
             PlayerNum = 1;

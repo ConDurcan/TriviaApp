@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TriviaGameProject.MainPage">
-    
+    <!--G00435598 - Conor Durcan My Git Repository - https://github.com/ConDurcan/TriviaApp-->
     <VerticalStackLayout BackgroundColor="{DynamicResource PrimaryBackgroundColour}">
         <Label Text="Top Quizzer" HorizontalOptions="Center" FontSize="Header" Padding="100" TextColor="{DynamicResource TextColour}" FontFamily="{DynamicResource FontStyle}"/>
         <Button Text="New Game" x:Name="NewGameBtn" Clicked="NewGameBtn_Clicked" WidthRequest="200" Margin="10" BackgroundColor="{DynamicResource ButtonColour}" FontFamily="{DynamicResource FontStyle}" FontSize="{DynamicResource FontSize}"/>

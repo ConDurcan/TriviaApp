@@ -19,20 +19,21 @@ public class ViewModel : INotifyPropertyChanged
             }
         }
     }
-    // DataBinding for changing Question Text on the GameScreens.
-    private string currentQuestion;
-    public string CurrentQuestion
+    // DataBinding for changing Timer Text on the GameScreens.
+    private int seconds;
+    public int Seconds
     {
         get
         {
-            return currentQuestion;
+            return seconds;
         }
         set
         {
-            currentQuestion = value;
-            OnPropertyChanged(nameof(CurrentQuestion));
+            seconds = value;
+            OnPropertyChanged();
         }
     }
+
     public ViewModel()
 	{
 		
